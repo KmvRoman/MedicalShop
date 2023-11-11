@@ -4,3 +4,7 @@ class ApplicationError(Exception):
 
 class ClientStatsIsEmpty(ApplicationError):
     pass
+
+
+class EmployeeStatsIsEmpty(ApplicationError):
+    pass
