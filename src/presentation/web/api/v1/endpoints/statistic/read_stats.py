@@ -7,15 +7,18 @@ from src.domain.user.write.entities.employee import EmployeeId
 from src.domain.user.write.entities.user import UserId
 from src.infrastructure.ioc.interfaces import InteractorFactory
 from src.presentation.web.api.v1.dependencies.dependencies import IocDependencyMarker
-from src.presentation.web.api.v1.endpoints.statistic.dto.response import EmployeeStatsResponse, EmployeesStatsResponse, \
-    ClientStatsResponse
+from src.presentation.web.api.v1.endpoints.statistic.dto.response import (
+    EmployeeStatsResponse, EmployeesStatsResponse, ClientStatsResponse,
+)
 
 router = APIRouter(prefix="/api/v1", tags=["Statistic"])
 
 
 @router.get(path="/statistics/employee/{id}")
 async def get_employee_stats(
-        id: int, month: int, year: int, ioc: InteractorFactory = Depends(IocDependencyMarker)
+        id: int,
+        month: int, year: int,
+        ioc: InteractorFactory = Depends(IocDependencyMarker)
 ) -> EmployeeStatsResponse:
     statistics = await ioc.employee_stats()
     employee_stats = await statistics(

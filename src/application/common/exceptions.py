@@ -1,10 +1,10 @@
 class ApplicationError(Exception):
-    pass
+    message: str
 
 
 class ClientStatsIsEmpty(ApplicationError):
-    pass
+    message = "Client statistics not found"
 
 
 class EmployeeStatsIsEmpty(ApplicationError):
-    pass
+    message = "Employee statistics not found"

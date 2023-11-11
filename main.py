@@ -1,4 +1,5 @@
 from fastapi import FastAPI
+from fastapi.exceptions import RequestValidationError, HTTPException
 from sqlalchemy.ext.asyncio import create_async_engine, AsyncSession
 from sqlalchemy.orm import sessionmaker
 import uvicorn
@@ -9,6 +10,9 @@ from src.infrastructure.database.repositories.statistic import StatisticReposito
 from src.infrastructure.ioc.ioc import IOC
 from src.presentation.web.api.v1 import routers
 from src.presentation.web.api.v1.dependencies.dependencies import IocDependencyMarker
+from src.presentation.web.api.v1.exception_handlers import error_handlers_binder
+from src.presentation.web.api.v1.exception_handlers.error422 import http422_error_handler
+from src.presentation.web.api.v1.exception_handlers.error400 import http_error_handler
 
 
 def main():
@@ -16,6 +20,7 @@ def main():
     app = FastAPI(
         **make_fastapi_instance_kwargs(config.server)
     )
+    error_handlers_binder(app=app)
     engine = create_async_engine(url=config.database.connection_uri)
     session_make = sessionmaker(  # NOQA
         engine, class_=AsyncSession, expire_on_commit=False, autoflush=False
