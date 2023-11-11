@@ -4,11 +4,11 @@ from src.domain.user.read.employee_stats import EmployeeStats
 
 
 @dataclass
-class ReadDtoStatisticsDtoInput:
+class ReadEmployeesStatisticsDtoInput:
     year: int
     month: int
 
 
 @dataclass
-class ReadDtoStatisticsDtoOutput:
+class ReadEmployeesStatisticsDtoOutput:
     employees_statistics: list[EmployeeStats]
