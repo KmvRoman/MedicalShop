@@ -7,6 +7,6 @@ from src.domain.user.write.entities.employee import EmployeeId
 class EmployeeStats:
     employee_id: EmployeeId
     name: str
-    quantity: int
     unique_clients: int
+    quantity: int
     amount: int

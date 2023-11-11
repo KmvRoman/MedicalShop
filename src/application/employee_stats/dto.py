@@ -6,6 +6,8 @@ from src.domain.user.write.entities.employee import EmployeeId
 @dataclass
 class ReadEmployeeStatisticDtoInput:
     employee_id: EmployeeId
+    year: int
+    month: int
 
 
 @dataclass

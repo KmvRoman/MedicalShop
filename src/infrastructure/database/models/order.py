@@ -1,7 +1,7 @@
 from datetime import datetime
 
 from sqlalchemy.orm import mapped_column, Mapped
-from sqlalchemy import BIGINT, Identity, DATETIME, ForeignKey
+from sqlalchemy import BIGINT, Identity, TIMESTAMP, ForeignKey
 
 from src.infrastructure.database.models.base import Base
 
@@ -14,4 +14,4 @@ class OrderTable(Base):
         nullable=False,
     )
     price: Mapped[int] = mapped_column(BIGINT, nullable=False)
-    date: Mapped[datetime] = mapped_column(DATETIME, nullable=False)
+    date: Mapped[datetime] = mapped_column(TIMESTAMP, nullable=False)

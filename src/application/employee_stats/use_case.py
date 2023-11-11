@@ -9,7 +9,8 @@ class ReadEmployeeStatisticCase(UseCase[ReadEmployeeStatisticDtoInput, ReadEmplo
         self.db_gateway = db_gateway
 
     async def __call__(self, data: ReadEmployeeStatisticDtoInput) -> ReadEmployeeStatisticDtoOutput:
-        employee_statistic = await self.db_gateway.read_employee_statistic(employee_id=data.employee_id)
+        employee_statistic = await self.db_gateway.read_employee_statistic(
+            employee_id=data.employee_id, year=data.year, month=data.month)
         if employee_statistic is None:
             raise EmployeeStatsIsEmpty
         return ReadEmployeeStatisticDtoOutput(

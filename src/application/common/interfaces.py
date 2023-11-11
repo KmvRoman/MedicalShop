@@ -7,15 +7,15 @@ from src.domain.user.write.entities.user import UserId
 
 
 class ReadClientStatistic(Protocol):
-    async def read_client_statistics(self, client_id: UserId) -> ClientStats:
+    async def read_client_statistics(self, client_id: UserId, year: int, month: int) -> ClientStats | None:
         raise NotImplementedError
 
 
 class ReadEmployeeStatistic(Protocol):
-    async def read_employee_statistic(self, employee_id: EmployeeId) -> EmployeeStats:
+    async def read_employee_statistic(self, employee_id: EmployeeId, year: int, month: int) -> EmployeeStats | None:
         raise NotImplementedError
 
 
 class ReadEmployeesStatistic(Protocol):
-    async def read_employees_statistic(self) -> list[EmployeeStats]:
+    async def read_employees_statistic(self, year: int, month: int) -> list[EmployeeStats]:
         raise NotImplementedError

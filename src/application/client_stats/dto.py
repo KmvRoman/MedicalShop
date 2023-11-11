@@ -6,6 +6,8 @@ from src.domain.user.write.entities.user import UserId
 @dataclass
 class ReadClientStatisticDtoInput:
     client_id: UserId
+    year: int
+    month: int
 
 
 @dataclass
