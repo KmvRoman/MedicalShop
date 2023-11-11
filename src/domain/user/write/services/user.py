@@ -1,6 +1,6 @@
 from datetime import date, datetime
 
-from src.domain.user.entities.user import User
+from src.domain.user.write.entities.user import User
 
 
 class UserService:
