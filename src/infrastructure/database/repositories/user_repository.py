@@ -1,6 +1,6 @@
 from sqlalchemy import update
 
-from src.application.common.exceptions import ProductNotFound
+from src.application.common.exceptions import ProductNotFound, ProductQuantityCannotBeLessWhenZero
 from src.domain.order.entities.order import Order, OrderId, OrderProduct, OrderProductIdent
 from src.domain.product.entities.product import Product, ProductId
 from src.domain.user.write.entities.client import Client, ClientId
@@ -71,4 +71,6 @@ class UserRepository(BaseRepository):
         product = await self.session.get(entity=ProductTable, ident=product_id)
         if product is None:
             raise ProductNotFound
+        if product.quantity + quantity < 0:
+            raise ProductQuantityCannotBeLessWhenZero
         product.quantity += quantity

@@ -16,3 +16,7 @@ class ProductsNotFoundInOrder(ApplicationError):
 
 class ProductNotFound(ApplicationError):
     message = "Product not found"
+
+
+class ProductQuantityCannotBeLessWhenZero(ApplicationError):
+    message = "Product quantity cannot be less when zero"
