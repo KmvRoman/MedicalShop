@@ -39,12 +39,14 @@ class UserRepository(BaseRepository):
         self.session.add(order_instance)
         await self.session.flush()
         for product in order.products:
-            product_order = OrderProductTable(
-                order_id=order_instance.id, employee_id=product.employee_id, product_id=product.product_id,
-            )
             product_inst = await self.session.get(entity=ProductTable, ident=product.product_id)
-            product_inst.quantity = product.quantity
-            self.session.add(product_order)
+            if product_inst.quantity >= 1:
+                product_inst.quantity -= product.quantity
+                order_instance.price += product.price
+                product_order = OrderProductTable(
+                    order_id=order_instance.id, employee_id=product.employee_id, product_id=product.product_id,
+                )
+                self.session.add(product_order)
         return order_instance.id
 
     async def add_price_to_product_order(
@@ -57,7 +59,7 @@ class UserRepository(BaseRepository):
                 return []
             new_product = OrderProduct(
                 employee_id=product.employee_id, product_id=product.product_id,
-                price=full_product.price, quantity=full_product.quantity,
+                price=full_product.price, quantity=0,
             )
             response_products.append(new_product)
         return response_products
