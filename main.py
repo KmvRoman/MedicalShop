@@ -7,6 +7,7 @@ import uvicorn
 from src.infrastructure.config.config import make_fastapi_instance_kwargs
 from src.infrastructure.config.parse_config import load_config, BASE_DIR
 from src.infrastructure.database.repositories.statistic import StatisticRepository
+from src.infrastructure.database.repositories.user_repository import UserRepository
 from src.infrastructure.ioc.ioc import IOC
 from src.presentation.web.api.v1 import routers
 from src.presentation.web.api.v1.dependencies.dependencies import IocDependencyMarker
@@ -26,7 +27,8 @@ def main():
         engine, class_=AsyncSession, expire_on_commit=False, autoflush=False
     )
     stat_repo = StatisticRepository(session_or_pool=session_make)
-    ioc = IOC(statistic_repo=stat_repo)
+    user_repo = UserRepository(session_or_pool=session_make)
+    ioc = IOC(statistic_repo=stat_repo, user_repo=user_repo)
     [app.include_router(router) for router in routers]
     app.dependency_overrides.update(
         {
