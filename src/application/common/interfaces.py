@@ -1,7 +1,6 @@
-from datetime import date
 from typing import Protocol
 
-from src.domain.order.entities.order import Order, OrderId, OrderProduct, OrderProductWithPrice
+from src.domain.order.entities.order import Order, OrderId, OrderProductIdent, OrderProduct
 from src.domain.product.entities.product import Product, ProductId
 from src.domain.user.read.client_stats import ClientStats
 from src.domain.user.read.employee_stats import EmployeeStats
@@ -51,6 +50,6 @@ class CreateOrder(Protocol):
 
 class AddPriceToOrderProduct(Product):
     async def add_price_to_product_order(
-            self, products: list[OrderProduct]
-    ) -> list[OrderProductWithPrice]:
+            self, products: list[OrderProductIdent]
+    ) -> list[OrderProduct]:
         raise NotImplementedError

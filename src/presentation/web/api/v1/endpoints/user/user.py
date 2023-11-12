@@ -4,7 +4,7 @@ from src.application.create_client.dto import CreateClientDtoInput
 from src.application.create_employee.dto import CreateEmployeeDtoInput
 from src.application.create_order.dto import CreateOrderDtoInput
 from src.application.create_product.dto import CreateProductDtoInput
-from src.domain.order.entities.order import OrderProduct
+from src.domain.order.entities.order import OrderProduct, OrderProductIdent
 from src.domain.product.entities.product import ProductId
 from src.domain.user.write.entities.client import ClientId
 from src.domain.user.write.entities.employee import EmployeeId
@@ -69,7 +69,7 @@ async def create_order(
     order_id = await create_order_case(data=CreateOrderDtoInput(
         client_id=payload.client_id, date=payload.date,
         products=[
-            OrderProduct(employee=pr.employee, product=pr.product)
+            OrderProductIdent(employee_id=pr.employee, product_id=pr.product)
             for pr in payload.products
         ]
     ))

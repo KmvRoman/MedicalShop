@@ -1,5 +1,4 @@
 from fastapi import FastAPI
-from fastapi.exceptions import RequestValidationError, HTTPException
 from sqlalchemy.ext.asyncio import create_async_engine, AsyncSession
 from sqlalchemy.orm import sessionmaker
 import uvicorn
@@ -12,8 +11,7 @@ from src.infrastructure.ioc.ioc import IOC
 from src.presentation.web.api.v1 import routers
 from src.presentation.web.api.v1.dependencies.dependencies import IocDependencyMarker
 from src.presentation.web.api.v1.exception_handlers import error_handlers_binder
-from src.presentation.web.api.v1.exception_handlers.error422 import http422_error_handler
-from src.presentation.web.api.v1.exception_handlers.error400 import http_error_handler
+from src.presentation.web.gunicorn_starter import StandaloneApplication
 
 
 def main():
@@ -35,7 +33,16 @@ def main():
             IocDependencyMarker: lambda: ioc,
         }
     )
-    uvicorn.run(app=app, host=config.server.host, port=config.server.port)
+    options = {
+        "bind": "%s:%s" % (config.server.host, config.server.port),
+        "worker_class": "uvicorn.workers.UvicornWorker",
+        "reload": True,
+        "disable_existing_loggers": False,
+        "preload_app": True,
+    }
+    gunicorn_app = StandaloneApplication(app, options)
+    gunicorn_app.run()
+    # uvicorn.run(app=app, host=config.server.host, port=config.server.port)
 
 
 if __name__ == '__main__':

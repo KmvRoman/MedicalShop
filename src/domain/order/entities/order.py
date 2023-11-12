@@ -10,15 +10,16 @@ OrderId = NewType("OrderId", int)
 
 
 @dataclass
-class OrderProduct:
-    employee: EmployeeId
-    product: ProductId
+class OrderProductIdent:
+    employee_id: EmployeeId
+    product_id: ProductId
 
 
 @dataclass
-class OrderProductWithPrice:
+class OrderProduct:
     employee_id: EmployeeId
     product_id: ProductId
+    quantity: int
     price: int
 
 

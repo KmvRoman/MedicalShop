@@ -1,4 +1,4 @@
-from src.domain.order.entities.order import Order, OrderId, OrderProduct, OrderProductWithPrice
+from src.domain.order.entities.order import Order, OrderId, OrderProduct, OrderProductIdent
 from src.domain.product.entities.product import Product, ProductId
 from src.domain.user.write.entities.client import Client, ClientId
 from src.domain.user.write.entities.employee import Employee, EmployeeId
@@ -39,23 +39,25 @@ class UserRepository(BaseRepository):
         self.session.add(order_instance)
         await self.session.flush()
         for product in order.products:
-            product_instance = OrderProductTable(
-                order_id=order_instance.id, employee_id=product.employee, product_id=product.product,
+            product_order = OrderProductTable(
+                order_id=order_instance.id, employee_id=product.employee_id, product_id=product.product_id,
             )
-            self.session.add(product_instance)
+            product_inst = await self.session.get(entity=ProductTable, ident=product.product_id)
+            product_inst.quantity = product.quantity
+            self.session.add(product_order)
         return order_instance.id
 
     async def add_price_to_product_order(
-            self, products: list[OrderProduct]
-    ) -> list[OrderProductWithPrice]:
+            self, products: list[OrderProductIdent]
+    ) -> list[OrderProduct]:
         response_products = []
         for product in products:
-            full_product = await self.session.get(ProductTable, ident=product.product)
+            full_product = await self.session.get(ProductTable, ident=product.product_id)
             if full_product is None:
                 return []
-            new_product = OrderProductWithPrice(
-                employee_id=product.employee, product_id=product.product,
-                price=full_product.price,
+            new_product = OrderProduct(
+                employee_id=product.employee_id, product_id=product.product_id,
+                price=full_product.price, quantity=full_product.quantity,
             )
             response_products.append(new_product)
         return response_products

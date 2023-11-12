@@ -1,7 +1,7 @@
 from dataclasses import dataclass
 from datetime import datetime
 
-from src.domain.order.entities.order import OrderProduct
+from src.domain.order.entities.order import OrderProductIdent
 from src.domain.user.write.entities.client import ClientId
 
 
@@ -9,4 +9,4 @@ from src.domain.user.write.entities.client import ClientId
 class CreateOrderDtoInput:
     client_id: ClientId
     date: datetime
-    products: list[OrderProduct]
+    products: list[OrderProductIdent]
