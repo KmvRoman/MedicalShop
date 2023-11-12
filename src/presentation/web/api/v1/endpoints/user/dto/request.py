@@ -32,3 +32,8 @@ class CreateOrderRequest(BaseModel):
     client_id: ClientId
     date: datetime
     products: list[ProductOrderRequest]
+
+
+class UpdateProductQuantity(BaseModel):
+    product_id: ProductId
+    quantity_add: int

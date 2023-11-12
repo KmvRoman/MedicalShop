@@ -53,3 +53,8 @@ class AddPriceToOrderProduct(Product):
             self, products: list[OrderProductIdent]
     ) -> list[OrderProduct]:
         raise NotImplementedError
+
+
+class UpdateQuantity(Protocol):
+    async def update_quantity(self, product_id: ProductId, quantity: int) -> None:
+        raise NotImplementedError

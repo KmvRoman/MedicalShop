@@ -1,3 +1,6 @@
+from sqlalchemy import update
+
+from src.application.common.exceptions import ProductNotFound
 from src.domain.order.entities.order import Order, OrderId, OrderProduct, OrderProductIdent
 from src.domain.product.entities.product import Product, ProductId
 from src.domain.user.write.entities.client import Client, ClientId
@@ -63,3 +66,9 @@ class UserRepository(BaseRepository):
             )
             response_products.append(new_product)
         return response_products
+
+    async def update_quantity(self, product_id: ProductId, quantity: int) -> None:
+        product = await self.session.get(entity=ProductTable, ident=product_id)
+        if product is None:
+            raise ProductNotFound
+        product.quantity += quantity

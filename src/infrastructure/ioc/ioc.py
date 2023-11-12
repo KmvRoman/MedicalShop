@@ -2,6 +2,7 @@ from src.application.create_client.use_case import CreateClientCase
 from src.application.create_employee.use_case import CreateEmployeeCase
 from src.application.create_order.use_case import CreateOrderCase
 from src.application.create_product.use_case import CreateProductCase
+from src.application.update_quantity.use_case import UpdateQuantityCase
 from src.domain.order.services.order import OrderService
 from src.domain.product.services.product import ProductService
 from src.domain.user.write.services.client import ClientService
@@ -44,3 +45,6 @@ class IOC(InteractorFactory):
 
     async def create_order(self) -> CreateOrderCase:
         return CreateOrderCase(db_gateway=self.user_repo, order_service=self.order_service)
+
+    async def update_quantity(self) -> UpdateQuantityCase:
+        return UpdateQuantityCase(db_gateway=self.user_repo)

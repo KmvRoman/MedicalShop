@@ -7,6 +7,7 @@ from src.application.create_order.use_case import CreateOrderCase
 from src.application.create_product.use_case import CreateProductCase
 from src.application.employee_stats.use_case import ReadEmployeeStatisticCase
 from src.application.employees_stats.use_case import ReadEmployeesStatisticCase
+from src.application.update_quantity.use_case import UpdateQuantityCase
 
 
 class InteractorFactory(Protocol):
@@ -30,4 +31,7 @@ class InteractorFactory(Protocol):
         raise NotImplementedError
 
     async def create_order(self) -> CreateOrderCase:
+        raise NotImplementedError
+
+    async def update_quantity(self) -> UpdateQuantityCase:
         raise NotImplementedError
