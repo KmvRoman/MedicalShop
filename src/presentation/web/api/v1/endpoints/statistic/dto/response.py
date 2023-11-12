@@ -1,7 +1,7 @@
 from pydantic import BaseModel
 
 from src.domain.user.write.entities.employee import EmployeeId
-from src.domain.user.write.entities.user import UserId
+from src.domain.user.write.entities.client import ClientId
 
 
 class EmployeeStatsResponse(BaseModel):
@@ -20,7 +20,7 @@ class EmployeesStatsResponse(BaseModel):
 
 
 class ClientStatsResponse(BaseModel):
-    id: UserId
+    id: ClientId
     full_name: str
     quantity: int
     amount: int

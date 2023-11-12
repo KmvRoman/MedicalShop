@@ -1,7 +1,7 @@
 from typing import NamedTuple
 
 from src.domain.user.write.entities.employee import EmployeeId
-from src.domain.user.write.entities.user import UserId
+from src.domain.user.write.entities.client import ClientId
 
 
 class EmployeeStatistic(NamedTuple):
@@ -13,7 +13,7 @@ class EmployeeStatistic(NamedTuple):
 
 
 class ClientStatistic(NamedTuple):
-    client_id: UserId
+    client_id: ClientId
     name: str
     product_count: int
     amount: int

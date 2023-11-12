@@ -3,7 +3,7 @@ from sqlalchemy import select, func, distinct
 from src.domain.user.read.client_stats import ClientStats
 from src.domain.user.read.employee_stats import EmployeeStats
 from src.domain.user.write.entities.employee import EmployeeId
-from src.domain.user.write.entities.user import UserId
+from src.domain.user.write.entities.client import ClientId
 from src.infrastructure.database import ClientTable, OrderProductTable, ProductTable, OrderTable, EmployeeTable
 from src.infrastructure.database.repositories.base import BaseRepository
 from src.infrastructure.database.serialize.statistic.mapping import (
@@ -12,7 +12,7 @@ from src.infrastructure.database.serialize.statistic.mapping import (
 
 
 class StatisticRepository(BaseRepository):
-    async def read_client_statistics(self, client_id: UserId, year: int, month: int) -> ClientStats | None:
+    async def read_client_statistics(self, client_id: ClientId, year: int, month: int) -> ClientStats | None:
         stmt = select(
             ClientTable.id, ClientTable.full_name, func.count(OrderProductTable.product_id),
             func.sum(ProductTable.price),

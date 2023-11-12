@@ -4,7 +4,7 @@ from src.application.client_stats.dto import ReadClientStatisticDtoInput
 from src.application.employee_stats.dto import ReadEmployeeStatisticDtoInput
 from src.application.employees_stats.dto import ReadEmployeesStatisticsDtoInput
 from src.domain.user.write.entities.employee import EmployeeId
-from src.domain.user.write.entities.user import UserId
+from src.domain.user.write.entities.client import ClientId
 from src.infrastructure.ioc.interfaces import InteractorFactory
 from src.presentation.web.api.v1.dependencies.dependencies import IocDependencyMarker
 from src.presentation.web.api.v1.endpoints.statistic.dto.response import (
@@ -53,7 +53,7 @@ async def get_client_stats(
     statistics = await ioc.client_stats()
     client_stats = await statistics(
         data=ReadClientStatisticDtoInput(
-            client_id=UserId(id), year=year, month=month,
+            client_id=ClientId(id), year=year, month=month,
         )
     )
     return ClientStatsResponse(

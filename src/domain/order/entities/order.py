@@ -4,7 +4,7 @@ from typing import NewType, Optional
 
 from src.domain.product.entities.product import ProductId
 from src.domain.user.write.entities.employee import EmployeeId
-from src.domain.user.write.entities.user import UserId
+from src.domain.user.write.entities.user import ClientId
 
 OrderId = NewType("OrderId", int)
 
@@ -18,7 +18,7 @@ class OrderProduct:
 @dataclass
 class Order:
     id: Optional[OrderId]
-    client_id: UserId
+    client_id: ClientId
     products: list[OrderProduct]
     price: int
     date: datetime
